@@ -1,0 +1,73 @@
+global:
+  enabled: true
+  datacenter: dc1
+  name: consul
+  image: 'hashicorp/consul-enterprise:1.8.4-ent'
+  federation:
+    enabled: true
+    createFederationSecret: true    
+  tls:
+    enabled: true
+server:
+  enabled: true
+  # Create a K8s secret with:
+  # `kubectl create secret generic consul-ent-license --from-literal="key=$(cat <your_path>/consul.hclic)" -n consul-cluster`
+  
+  enterpriseLicense:
+    secretName: consul-ent-license
+    secretKey: key
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
+  # affinity:
+ui:
+  enabled: true
+  service:
+    enabled: true
+    # type: NodePort
+    # additionalSpec: |
+    #   ports:
+    #   - name: http
+    #     port: 80
+    #     targetPort: 8500
+    #     nodePort: 30084
+    #   - name: https
+    #     port: 443
+    #     targetPort: 8501
+    #     nodePort: 30085
+
+meshGateway:
+  enabled: true
+  enableHealthChecks: false
+  replicas: 1
+  service:
+    enabled: true
+    # type: 'NodePort'
+    # nodePort: 30001
+
+connectInject:
+  enabled: true
+  # consulNamespaces:
+  #   mirroringK8S: true
+client:
+  enabled: true
+  grpc: true
+controller:
+  enabled: true
+
+ingressGateways:
+  enabled: true
+  defaults:
+    replicas: 1
+    service:
+      type: NodePort
+      # ports:
+      #   - port: 8443
+      #     nodePort: 30003
+      #   - port: 8080
+      #     nodePort: 30002
+    # affinity: ""
+    gateways:
+      - name: ingress-gateway

@@ -109,7 +109,7 @@ resource "kubernetes_secret" "consul-license" {
 # Because we are executing remotely using TFC/TFE we want to save our templates in a Cloud bucket
 resource "google_storage_bucket_object" "consul-config" {
   name   = "${var.cluster_name}-${formatdate("YYMMDD_HHmm",timestamp())}.yml"
-  content = templatefile("${path.root}/templates/consul_values.yaml",{
+  content = templatefile("${path.root}/templates/consul-values-dc.yaml",{
             # hostname = var.hostname,
             # hosts = local.hostnames,
             # http = var.tls == "enabled" ? "https" : "http",
