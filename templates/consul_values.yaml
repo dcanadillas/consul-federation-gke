@@ -24,8 +24,8 @@ ui:
 
 connectInject:
   enabled: true
-  consulNamespaces:
-    mirroringK8S: true
+  # consulNamespaces:
+  #   mirroringK8S: true
 
 client:
   enabled: true

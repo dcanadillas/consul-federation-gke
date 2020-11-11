@@ -70,6 +70,6 @@ variable "dns_zone" {
   default = null
 }
 variable "consul_license" {
-  description = "Consul license for the Enterprise version"
+  description = "License for Consul Enterprise"
   default = null
 }
