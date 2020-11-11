@@ -65,11 +65,11 @@ resource "kubernetes_namespace" "consul" {
     name = var.cluster_namespace
   }
 }
-resource "kubernetes_namespace" "nginx" {
-  metadata {
-    name = "ingress"
-  }
-}
+# resource "kubernetes_namespace" "nginx" {
+#   metadata {
+#     name = "ingress"
+#   }
+# }
 
 # Creating dynamically a hostname list to use later on template
 data "null_data_source" "hostnames" {
@@ -119,13 +119,13 @@ resource "google_storage_bucket_object" "consul-config" {
   bucket = var.config_bucket
 }
 
-resource "google_storage_bucket_object" "nginx-config" {
-  name   = "${var.cluster_name}-${formatdate("YYMMDD_HHmm",timestamp())}.yml"
-  content = templatefile("${path.root}/templates/nginx.yaml.tpl",{
-            vault_namespace = kubernetes_namespace.consul.metadata.0.name,
-            })
-  bucket = var.config_bucket
-}
+# resource "google_storage_bucket_object" "nginx-config" {
+#   name   = "${var.cluster_name}-${formatdate("YYMMDD_HHmm",timestamp())}.yml"
+#   content = templatefile("${path.root}/templates/nginx.yaml.tpl",{
+#             vault_namespace = kubernetes_namespace.consul.metadata.0.name,
+#             })
+#   bucket = var.config_bucket
+# }
 
 ## I you want to create the template files locally uncomment the following lines (This is not working with remote execution in TFE)
 # resource "local_file" "foo" {

@@ -11,6 +11,9 @@
 output "consul_config" {
   value = module.k8s.consul_yaml
 }
-output "k8s_endpoint" {
-  value = module.gke.k8s_endpoint
+output "primary_endpoint" {
+  value = module.gke.0.k8s_endpoint
+}
+output "secondary_endpoint" {
+  value = module.gke.1.k8s_endpoint
 }
