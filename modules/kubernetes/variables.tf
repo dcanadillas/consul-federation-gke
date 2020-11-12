@@ -28,9 +28,10 @@ variable "gcp_region" {
 }
 
 
-# variable "client_certificate" {
-#   description = "The K8s client cert"
-# }
+variable "values_file" {
+  description = "Values YAML file in templates folder"
+  default = "consul-values-dc.yaml"
+}
 variable "ca_certificate" {
   description = "The K8s ca cert"
 }
