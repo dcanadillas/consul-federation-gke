@@ -1,13 +1,14 @@
 global:
   enabled: true
-  datacenter: dc1
+  datacenter: ${datacenter}
   name: consul
-  image: 'hashicorp/consul-enterprise:1.8.4-ent'
+  image: 'hashicorp/consul-enterprise:${version}-ent'
   federation:
     enabled: true
     createFederationSecret: true    
   tls:
     enabled: true
+  enableConsulNamespaces: true
 server:
   enabled: true
   # Create a K8s secret with:
@@ -49,8 +50,8 @@ meshGateway:
 
 connectInject:
   enabled: true
-  # consulNamespaces:
-  #   mirroringK8S: true
+  consulNamespaces:
+    mirroringK8S: true
 client:
   enabled: true
   grpc: true

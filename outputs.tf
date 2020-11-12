@@ -1,19 +1,15 @@
-
-# output "gke_ca_certificate" {
-#   value = base64decode(module.gke.ca_certificate)
-# }
-# output "consul_config" {
-#   value = module.k8s[0].consul_yaml
-# }
-# output "k8s_endpoint" {
-#   value = module.gke[0].k8s_endpoint
-# }
 output "consul_config" {
   value = module.k8s.consul_yaml
 }
-output "primary_endpoint" {
-  value = module.gke.0.k8s_endpoint
+output "gke_endpoints" {
+  value = module.gke.*.k8s_endpoint
 }
-output "secondary_endpoint" {
-  value = module.gke.1.k8s_endpoint
+output "caCert" {
+  value = module.k8s.federation_secret.caCert
+}
+output "consul_values_dc1" {
+  value = module.k8s.consul_yaml
+}
+output "consul_values_dc2" {
+  value = var.create_federation ? module.k8s-sec.0.consul_yaml : null
 }

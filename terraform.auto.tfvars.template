@@ -12,3 +12,4 @@ default_gke = true
 default_network = false
 dns_zone = null
 consul_license = ""
+create_federation = true

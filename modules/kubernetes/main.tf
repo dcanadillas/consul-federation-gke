@@ -82,19 +82,19 @@ locals {
   hostnames = data.null_data_source.hostnames.*.inputs.hostnames
 }
 
-# Let's create a secret with the json credentials
-resource "google_service_account_key" "gcp_sa_key" {
-  service_account_id = var.gcp_service_account.name
-}
-resource "kubernetes_secret" "google-application-credentials" {
-  metadata {
-    name = "gcp-creds"
-    namespace = kubernetes_namespace.consul.metadata.0.name
-  }
-  data = {
-    "credentials.json" = base64decode(google_service_account_key.gcp_sa_key.private_key)
-  }
-}
+# # Let's create a secret with the json credentials
+# resource "google_service_account_key" "gcp_sa_key" {
+#   service_account_id = var.gcp_service_account.name
+# }
+# resource "kubernetes_secret" "google-application-credentials" {
+#   metadata {
+#     name = "gcp-creds"
+#     namespace = kubernetes_namespace.consul.metadata.0.name
+#   }
+#   data = {
+#     "credentials.json" = base64decode(google_service_account_key.gcp_sa_key.private_key)
+#   }
+# }
 resource "kubernetes_secret" "consul-license" {
   metadata {
     name = "consul-ent-license"
@@ -105,13 +105,22 @@ resource "kubernetes_secret" "consul-license" {
   }
 }
 
+resource "kubernetes_secret" "consul-federation" {
+  count = var.federated ? 1 : 0
+  metadata {
+    name = "consul-federation"
+    namespace = kubernetes_namespace.consul.metadata.0.name
+  }
+  data = var.federation_secret
+}
+
 
 # Because we are executing remotely using TFC/TFE we want to save our templates in a Cloud bucket
 resource "google_storage_bucket_object" "consul-config" {
   name   = "${var.cluster_name}-${formatdate("YYMMDD_HHmm",timestamp())}.yml"
   content = templatefile("${path.root}/templates/${var.values_file}",{
-            # hostname = var.hostname,
-            # hosts = local.hostnames,
+            version = "1.8.4",
+            datacenter = var.consul_dc
             # http = var.tls == "enabled" ? "https" : "http",
             # disable_tls = var.tls == "enabled" ? false : true,
             # tls = var.tls

@@ -32,6 +32,14 @@ variable "values_file" {
   description = "Values YAML file in templates folder"
   default = "consul-values-dc.yaml"
 }
+variable "federated" {
+  description = "To select if this cluster is a federated one"
+  default = false
+}
+variable "federation_secret" {
+  description = "Federation secret data to create. This is a map of values"
+  default = null
+}
 variable "ca_certificate" {
   description = "The K8s ca cert"
 }
@@ -65,4 +73,8 @@ variable "dns_zone" {
 variable "consul_license" {
   description = "License for Consul Enterprise"
   default = null
+}
+variable "consul_dc" {
+  description = "Datacenter name for Consul servers"
+  default = "dc1"
 }

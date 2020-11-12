@@ -16,3 +16,11 @@ resource "helm_release" "consul" {
   ]
 }
 
+data "kubernetes_secret" "consul-federation" {
+  depends_on = [ helm_release.consul ]
+  metadata {
+    name = "consul-federation"
+    namespace = kubernetes_namespace.consul.metadata.0.name
+  }
+}
+

@@ -22,8 +22,8 @@ variable "consul_nodes" {
   description = "Number of Consul nodes (pods) of the Consul server cluster"
   default=3
 }
-# variable "vault_hostname" {
-#   description = "FQDN of your Vault cluster"
+# variable "consul_hostname" {
+#   description = "FQDN of your Consul cluster"
 #   default=""
 # }
 variable "regional_k8s" {
@@ -36,12 +36,6 @@ variable "owner" {
 variable "gcs_bucket" {
   description = "Bucket to save template files created"
 }
-# variable "key_ring" {
-#   description = "KMS Keyring name"
-# }
-# variable "crypto_key" {
-#   description = "KMS key name"
-# }
 variable "service_account" {
   description = "Service Account to be used as scope permissions"
 }
@@ -49,22 +43,10 @@ variable "default_gke" {
   description = "Set it to true if you want to speed up GKE cluster creation by creating a default NodePool"
   default = false
 }
-# variable "vault_cert" {
-#   description = "TLS Vault cert"
-#   default = ""
-# }
-# variable "vault_ca" {
-#   description = "TLS Vault CA"
-#   default = ""
-# }
-# variable "vault_key" {
-#   description = "Vault key of certificate"
-#   default = ""
-# }
-# variable "tls" {
-#   description = "Enable/Disable TLS"
-#   default = "disabled"
-# }
+variable "default_network" {
+  description = "Set it to true if we want to use the default network in GCP where creating GKE clusters"
+  default = false
+}
 variable "dns_zone" {
   description = "Cloud DNS zone to create record"
   default = null
@@ -72,4 +54,8 @@ variable "dns_zone" {
 variable "consul_license" {
   description = "License for Consul Enterprise"
   default = null
+}
+variable "create_federation" {
+  description = "Set it to true if you want to deploy 2 Consul federated cluster"
+  default = true
 }

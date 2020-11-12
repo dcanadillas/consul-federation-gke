@@ -1,13 +1,19 @@
 global:
   enabled: true
-  datacenter: dc1
+  datacenter: ${datacenter}
   name: consul
-  image: 'hashicorp/consul-enterprise:1.8.4-ent'
-  federation:
-    enabled: true
-    createFederationSecret: true    
+  image: 'hashicorp/consul-enterprise:${version}-ent'
   tls:
     enabled: true
+    caCert:
+      secretName: consul-federation
+      secretKey: caCert
+    caKey:
+      secretName: consul-federation
+      secretKey: caKey
+  federation:
+    enabled: true
+  enableConsulNamespaces: true
 server:
   enabled: true
   # Create a K8s secret with:
@@ -22,6 +28,13 @@ server:
     enabled: true
     maxUnavailable: 0
   # affinity:
+  extraVolumes:
+    - type: secret
+      name: consul-federation
+      items:
+        - key: serverConfigJSON
+          path: config.json
+      load: true
 ui:
   enabled: true
   service:
@@ -49,8 +62,8 @@ meshGateway:
 
 connectInject:
   enabled: true
-  # consulNamespaces:
-  #   mirroringK8S: true
+  consulNamespaces:
+    mirroringK8S: true
 client:
   enabled: true
   grpc: true
