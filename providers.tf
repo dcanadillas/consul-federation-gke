@@ -26,9 +26,7 @@ provider "helm" {
   alias = "primary"
   kubernetes {
     load_config_file = false
-    # host = module.gke.k8s_endpoint
     token = data.google_client_config.current.access_token
-    # cluster_ca_certificate = module.gke.gke_ca_certificate
     host = local.primary_host
     cluster_ca_certificate = local.primary_cert
   }
@@ -45,9 +43,7 @@ provider "helm" {
   alias = "secondary"
   kubernetes {
     load_config_file = false
-    # host = module.gke.k8s_endpoint
     token = data.google_client_config.current.access_token
-    # cluster_ca_certificate = module.gke.gke_ca_certificate
     host = local.secondary_host
     cluster_ca_certificate = local.secondary_cert
   }
@@ -55,9 +51,7 @@ provider "helm" {
 provider "kubernetes" {
   alias = "secondary"
   load_config_file = false
-  # host = module.gke.k8s_endpoint
   token = data.google_client_config.current.access_token
-  # cluster_ca_certificate = module.gke.gke_ca_certificate
   host = local.secondary_host
   cluster_ca_certificate = local.secondary_cert
 } 
