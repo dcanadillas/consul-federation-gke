@@ -15,7 +15,7 @@ The deployment architecture in GKE considering 3 nodes clusters, like you would 
 
 ### Requirements
 
-* Terraform 0.13+ (and a Terraform Cloud account if you use Terraform Cloud/Enterprise)
+* Terraform 0.13+ (and a [Terraform Cloud account](https://app.terraform.io/signup/account) if you use Terraform Cloud/Enterprise)
 * GCP account and resource permissions in a GCP project:
   * Container Engine permissions to create and admin GKE clusters
   * GCS bucket permissions to upload your Consul configuration files (you need to create the bucket first)
@@ -44,11 +44,11 @@ This Terraform configuration is based on the following actions and parameters
   * `create_federation` : To create a federated cluster. If you just want to deploy one Consul cluster without federation set this to *false* (default is *true*)
   * `consul_enterprise` : Set this to true to deploy Consul Enterprise and enable by default its features (default is *false*)
   * `consul_version` : Specify the version of Consul (1.8.0+)
-* It uses some `yaml` files values  in the [`temmplates` directory](./templates) in the root module
+* It uses some `yaml` files values  in the [`templates` directory](./templates) in the root module
 
 ## Deploy Consul
 
-If you want to use Terraform Cloud/Enterprise comment out the following lines from `main.tf`:
+If you want to use Terraform Cloud/Enterprise uncomment the following lines from `main.tf` and replace your `organization` and `workspace` values:
   ```
   # backend "remote" {
   #   hostname = "app.terraform.io"
