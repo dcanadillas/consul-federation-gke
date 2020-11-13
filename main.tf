@@ -26,7 +26,7 @@ module "gke" {
   gcp_region = var.gcp_region
   gcp_zone = var.gcp_zone
   gcs_bucket = "dcanadillas-se"
-  gke_cluster = "${var.gke_cluster}-${count.index}"
+  gke_cluster = "${var.gke_cluster}${count.index + 1}"
   default_gke = var.default_gke
   default_network = var.default_network
   owner = var.owner
