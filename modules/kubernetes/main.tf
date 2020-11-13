@@ -53,8 +53,10 @@ resource "kubernetes_secret" "consul-federation" {
 resource "google_storage_bucket_object" "consul-config" {
   name   = "${var.cluster_name}-${formatdate("YYMMDD_HHmm",timestamp())}.yml"
   content = templatefile("${path.root}/templates/${var.values_file}",{
-            version = "1.8.4",
+            # version = "1.8.4",
+            image = var.enterprise ? "hashicorp/consul-enterprise:${var.consul_version}-ent" : "consul:${var.consul_version}"
             datacenter = var.consul_dc
+            enterprise = var.enterprise
             # http = var.tls == "enabled" ? "https" : "http",
             # disable_tls = var.tls == "enabled" ? false : true,
             # tls = var.tls

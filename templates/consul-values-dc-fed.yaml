@@ -2,7 +2,8 @@ global:
   enabled: true
   datacenter: ${datacenter}
   name: consul
-  image: 'hashicorp/consul-enterprise:${version}-ent'
+  image: ${image}
+  # image: 'hashicorp/consul-enterprise:$${version}-ent'
   tls:
     enabled: true
     caCert:
@@ -13,16 +14,19 @@ global:
       secretKey: caKey
   federation:
     enabled: true
+%{if enterprise ~} 
   enableConsulNamespaces: true
+%{endif ~}
 server:
   enabled: true
   # Create a K8s secret with:
   # `kubectl create secret generic consul-ent-license --from-literal="key=$(cat <your_path>/consul.hclic)" -n consul-cluster`
-  
+%{if enterprise ~}   
   enterpriseLicense:
     secretName: consul-ent-license
     secretKey: key
-  replicas: 1
+%{endif ~}
+  replicas: 3
   bootstrapExpect: 1
   disruptionBudget:
     enabled: true

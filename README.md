@@ -3,11 +3,11 @@
 > Note: This is not an official HashiCorp repositoiry and it is still a WIP...
 
 ## Consul Federation Context
-We can have deployed two application services in both Kubernetes clusters with Consul Federation enabled and Service Mesh, like the following:
+We can deploy application services in several Kubernetes clusters and use Consul Federation cluster capabilities and Service Mesh features to communicate registered services and work in a geo-failover scenario:
 
 ![Consul Service Mesh Federation](./docs/Consul-Services-Federation-Hashicups.png)
 
-The deployment architecture in GKE considering 3 nodes cluster, like you would deploy in this Terraform Configuration, would be represented in the following diagram:
+The deployment architecture in GKE considering 3 nodes clusters, like you would deploy in this Terraform Configuration, is shown in the following diagram:
 
 ![Consul 3 nodes GKE deployment](./docs/Consul-GKE-Deployment.png)
 
@@ -19,13 +19,14 @@ The deployment architecture in GKE considering 3 nodes cluster, like you would d
 * GCP account and resource permissions in a GCP project:
   * Container Engine permissions to create and admin GKE clusters
   * GCS bucket permissions to upload your Consul configuration files (you need to create the bucket first)
+* In case of deploying Consul Enterprise you will need a valid license
 
 ### Terraform configuration
 This Terraform configuration is based on the following actions and parameters
 
-* It calls a [GKE Module](https://github.com/dcanadillas/dcanadillas-tf-gke) in GitHub to deploy GKE clusters
-* It uses an internal Kubernetes module that creates resources and install Consul Enterprise using Helm
-* You need to set some variables in a `terraform.auto.tfvars` file:
+* It calls a [GKE Module](https://github.com/dcanadillas/dcanadillas-tf-gke) stored in GitHub to deploy GKE clusters
+* It uses an internal Kubernetes module that creates resources and install Consul Enterprise using the official Helm chart
+* It needs some variables values that can be defined in a `terraform.auto.tfvars` file:
   * `gcp_region` : The GCP region to deploy your clusters
   * `gcp_project` : Your GCP project where you have permissions to deploy
   * `node_type` : VM instance size for K8s nodes
@@ -41,9 +42,11 @@ This Terraform configuration is based on the following actions and parameters
   * `dns_zone` : This is not used at the moment (it will allow you to create a Google DNS record to access your Consul UI via FQDN)
   * `consul_license` : Consult Enterprise license key (**right now it is mandatory because we are using Enterprise version**)
   * `create_federation` : To create a federated cluster. If you just want to deploy one Consul cluster without federation set this to *false* (default is *true*)
+  * `consul_enterprise` : Set this to true to deploy Consul Enterprise and enable by default its features (default is *false*)
+  * `consul_version` : Specify the version of Consul (1.8.0+)
 * It uses some `yaml` files values  in the [`temmplates` directory](./templates) in the root module
 
-## Deploy Consul Enterprise
+## Deploy Consul
 
 If you want to use Terraform Cloud/Enterprise comment out the following lines from `main.tf`:
   ```
@@ -75,4 +78,6 @@ Check the plan shown in the output and type `yes` to confirm deployment... You a
 > NOTE: Depending on `create_federation` variable you will have one or two clusters:
 > * `create_federation = true` Creates 2 GKE clusters and deploys a primary Consul datacenter and a secondary federated Consul datacenter
 > * `create_federation = false` Creates 1 GKE cluster and it deploys Consul with federation configuration ready as primary if you want to configure a secondary federated cluster by your own
+
+> NOTE (Enterprise version): You can use Consul Enterprise by defining the variable `consul_enterprise = true`. By using the Enterprise binary the configuration defined in this repo will show the use case of working with namespaces by enabling the `mirroringK8s` parameter, which will use a Consul namespace matching with the Kubernetes namespace where application services are deployed. 
 

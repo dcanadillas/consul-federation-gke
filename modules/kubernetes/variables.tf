@@ -78,3 +78,10 @@ variable "consul_dc" {
   description = "Datacenter name for Consul servers"
   default = "dc1"
 }
+variable "enterprise" {
+  description = "Usin Enterprise version if true"
+  default = false
+}
+variable "consul_version" {
+  description = "Consul version"
+}

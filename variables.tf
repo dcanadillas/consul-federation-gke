@@ -59,3 +59,10 @@ variable "create_federation" {
   description = "Set it to true if you want to deploy 2 Consul federated cluster"
   default = true
 }
+variable "consul_enterprise" {
+  description = "Using Enterprise version if true"
+  default = false
+}
+variable "consul_version" {
+  description = "Consul version"
+}

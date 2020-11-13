@@ -55,6 +55,8 @@ module "k8s" {
   consul_license = var.consul_license
   values_file = "consul-values-dc.yaml"
   consul_dc = "dc1"
+  enterprise = var.consul_enterprise
+  consul_version = var.consul_version
 }
 
 module "k8s-sec" {
@@ -84,4 +86,6 @@ module "k8s-sec" {
   federated = true
   federation_secret = module.k8s.federation_secret
   consul_dc = "dc2"
+  enterprise = var.consul_enterprise
+  consul_version = var.consul_version
 }
