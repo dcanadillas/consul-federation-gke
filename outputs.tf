@@ -1,6 +1,6 @@
-output "consul_config" {
-  value = module.k8s.consul_yaml
-}
+# output "consul_config" {
+#   value = module.k8s.consul_yaml
+# }
 output "gke_endpoints" {
   value = module.gke.*.k8s_endpoint
 }
