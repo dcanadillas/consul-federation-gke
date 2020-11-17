@@ -57,6 +57,7 @@ resource "google_storage_bucket_object" "consul-config" {
             image = var.enterprise ? "hashicorp/consul-enterprise:${var.consul_version}-ent" : "consul:${var.consul_version}"
             datacenter = var.consul_dc
             enterprise = var.enterprise
+            license = var.consul_license
             # http = var.tls == "enabled" ? "https" : "http",
             # disable_tls = var.tls == "enabled" ? false : true,
             # tls = var.tls

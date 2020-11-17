@@ -21,7 +21,7 @@ server:
   enabled: true
   # Create a K8s secret with:
   # `kubectl create secret generic consul-ent-license --from-literal="key=$(cat <your_path>/consul.hclic)" -n consul-cluster`
-%{if enterprise ~}   
+%{if enterprise && license != null ~}  
   enterpriseLicense:
     secretName: consul-ent-license
     secretKey: key
@@ -78,13 +78,13 @@ ingressGateways:
   enabled: true
   defaults:
     replicas: 1
-    # service:
-    #   type: NodePort
-    #   ports:
-    #     - port: 8443
-    #       nodePort: 30003
-    #     - port: 8080
-    #       nodePort: 30002
-    # affinity: ""
-    gateways:
-      - name: ingress-gateway
+    service:
+      type: LoadBalancer
+      ports:
+        - port: 443
+          nodePort: null
+        - port: 8080
+          nodePort: null
+    # affinity: ""
+  gateways:
+    - name: ingress-gateway

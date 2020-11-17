@@ -9,11 +9,13 @@ resource "helm_release" "consul" {
   chart  = "consul"
   create_namespace = false
   namespace = kubernetes_namespace.consul.metadata.0.name
-  force_update = true
+  force_update = false
 
   values = [
       google_storage_bucket_object.consul-config.content
   ]
+
+  wait = false
 }
 
 data "kubernetes_secret" "consul-federation" {
