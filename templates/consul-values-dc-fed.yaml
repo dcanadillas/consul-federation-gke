@@ -71,8 +71,8 @@ connectInject:
 client:
   enabled: true
   grpc: true
-controller:
-  enabled: true
+# controller:
+#   enabled: true
 
 ingressGateways:
   enabled: true
