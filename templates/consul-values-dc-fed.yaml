@@ -26,8 +26,8 @@ server:
     secretName: consul-ent-license
     secretKey: key
 %{endif ~}
-  replicas: 3
-  bootstrapExpect: 1
+  replicas: ${nodes}
+  bootstrapExpect: ${nodes}
   disruptionBudget:
     enabled: true
     maxUnavailable: 0

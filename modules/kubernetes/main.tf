@@ -30,6 +30,7 @@ locals {
 #   }
 # }
 resource "kubernetes_secret" "consul-license" {
+  count = var.consul_license == null ? 0 : 1
   metadata {
     name = "consul-ent-license"
     namespace = kubernetes_namespace.consul.metadata.0.name
@@ -58,6 +59,7 @@ resource "google_storage_bucket_object" "consul-config" {
             datacenter = var.consul_dc
             enterprise = var.enterprise
             license = var.consul_license
+            nodes = var.nodes
             # http = var.tls == "enabled" ? "https" : "http",
             # disable_tls = var.tls == "enabled" ? false : true,
             # tls = var.tls

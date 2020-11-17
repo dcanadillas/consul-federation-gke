@@ -4,6 +4,7 @@ node_type = "n1-standard-2"
 gcp_zone = ""
 gke_cluster = ""
 numnodes = 3
+consul_nodes = 3
 regional_k8s = false
 owner = ""
 gcs_bucket = ""

@@ -34,6 +34,7 @@ pyvars.txt
 ## Templates files generated locally
 **/vault.yaml
 **/jx-requirements-*.yml
+
 vault-init.log
 vault.yaml
 consul.yaml
