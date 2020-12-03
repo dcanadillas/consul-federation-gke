@@ -1,13 +1,13 @@
 terraform {
   required_version = ">= 0.13"
-  backend "remote" {
+  # backend "remote" {
   #   hostname = "app.terraform.io"
   #   organization = "my_org"
 
   #   workspaces {
   #     name = "my_workspace"
   #   }
-  }
+  # }
 }
 
 # Collect client config for GCP
