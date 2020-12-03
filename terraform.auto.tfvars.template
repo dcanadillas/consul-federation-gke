@@ -1,7 +1,7 @@
-gcp_region = ""
+gcp_region = ["",""]
 gcp_project = ""
 node_type = "n1-standard-2"
-gcp_zone = ""
+gcp_zone = ["",""]
 gke_cluster = ""
 numnodes = 3
 consul_nodes = 3
