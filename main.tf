@@ -1,13 +1,13 @@
 terraform {
   required_version = ">= 0.13"
-  # backend "remote" {
+  backend "remote" {
   #   hostname = "app.terraform.io"
   #   organization = "my_org"
 
   #   workspaces {
   #     name = "my_workspace"
   #   }
-  # }
+  }
 }
 
 # Collect client config for GCP
@@ -23,8 +23,8 @@ module "gke" {
   count = var.create_federation ? 2 : 1
   dns_zone = var.dns_zone
   gcp_project = var.gcp_project
-  gcp_region = var.gcp_region
-  gcp_zone = var.gcp_zone
+  gcp_region = var.gcp_region[count.index]
+  gcp_zone = var.gcp_zone[count.index]
   gcs_bucket = var.gcs_bucket
   gke_cluster = "${var.gke_cluster}${count.index + 1}"
   default_gke = var.default_gke
@@ -44,8 +44,8 @@ module "k8s" {
   cluster_endpoint = module.gke.0.k8s_endpoint
   cluster_namespace = "consul"
   ca_certificate = module.gke.0.gke_ca_certificate
-  location = var.gcp_zone
-  gcp_region = var.gcp_region
+  location = var.gcp_zone[0]
+  gcp_region = var.gcp_region[0]
   gcp_project = var.gcp_project
   cluster_name = var.gke_cluster
   config_bucket = var.gcs_bucket
@@ -57,6 +57,8 @@ module "k8s" {
   consul_dc = "dc1"
   enterprise = var.consul_enterprise
   consul_version = var.consul_version
+  # envoy_version = var.envoy_version
+  chart_version = var.chart_version
 }
 
 module "k8s-sec" {
@@ -73,8 +75,8 @@ module "k8s-sec" {
   cluster_endpoint = module.gke.1.k8s_endpoint
   cluster_namespace = "consul"
   ca_certificate = module.gke.1.gke_ca_certificate
-  location = var.gcp_zone
-  gcp_region = var.gcp_region
+  location = var.gcp_zone[1]
+  gcp_region = var.gcp_region[1]
   gcp_project = var.gcp_project
   cluster_name = var.gke_cluster
   config_bucket = var.gcs_bucket
@@ -88,4 +90,6 @@ module "k8s-sec" {
   consul_dc = "dc2"
   enterprise = var.consul_enterprise
   consul_version = var.consul_version
+  # envoy_version = var.envoy_version
+  chart_version = var.chart_version
 }

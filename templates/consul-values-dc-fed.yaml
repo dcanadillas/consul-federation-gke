@@ -4,6 +4,7 @@ global:
   name: consul
   image: ${image}
   # image: 'hashicorp/consul-enterprise:$${version}-ent'
+  # imageEnvoy: $${envoy}
   tls:
     enabled: true
     caCert:

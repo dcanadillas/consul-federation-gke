@@ -1,14 +1,14 @@
 data "google_container_cluster" "primary_gke" {
   depends_on = [ module.gke ]
   name     = module.gke.0.cluster_name
-  location = var.gcp_zone
+  location = var.gcp_zone[0]
 }
 
 data "google_container_cluster" "secondary_gke" {
   count = var.create_federation ? 1 : 0
   depends_on = [ module.gke ]
   name     = module.gke.1.cluster_name
-  location = var.gcp_zone
+  location = var.gcp_zone[1]
 }
 
 locals {
@@ -20,7 +20,7 @@ locals {
 
 provider "google" {
   project = var.gcp_project
-  region = var.gcp_region
+  # region = var.gcp_region
 }
 provider "helm" {
   alias = "primary"

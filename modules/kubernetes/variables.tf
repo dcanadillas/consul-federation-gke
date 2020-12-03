@@ -84,4 +84,13 @@ variable "enterprise" {
 }
 variable "consul_version" {
   description = "Consul version"
+  default = "1.8.4"
+}
+# variable "envoy_version" {
+#   description = "Envoy proxy version. Check supported matrix: https://www.consul.io/docs/connect/proxies/envoy#supported-versions"
+#   default = "v1.14-latest"
+# }
+variable "chart_version" {
+  description = "Consul Helm Chart version: https://www.consul.io/docs/k8s/upgrade/compatibility#supported-consul-versions"
+  default = "0.26.0"
 }

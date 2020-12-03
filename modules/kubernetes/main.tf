@@ -56,6 +56,7 @@ resource "google_storage_bucket_object" "consul-config" {
   content = templatefile("${path.root}/templates/${var.values_file}",{
             # version = "1.8.4",
             image = var.enterprise ? "hashicorp/consul-enterprise:${var.consul_version}-ent" : "consul:${var.consul_version}"
+            # envoy = "envoyproxy/envoy-alpine:${var.envoy_version}"
             datacenter = var.consul_dc
             enterprise = var.enterprise
             license = var.consul_license

@@ -10,6 +10,7 @@ resource "helm_release" "consul" {
   create_namespace = false
   namespace = kubernetes_namespace.consul.metadata.0.name
   force_update = false
+  version = var.chart_version
 
   values = [
       google_storage_bucket_object.consul-config.content
