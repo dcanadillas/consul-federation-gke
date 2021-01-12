@@ -25,7 +25,7 @@ provider "google" {
 provider "helm" {
   alias = "primary"
   kubernetes {
-    load_config_file = false
+    # load_config_file = false
     token = data.google_client_config.current.access_token
     host = local.primary_host
     cluster_ca_certificate = local.primary_cert
@@ -42,7 +42,7 @@ provider "kubernetes" {
 provider "helm" {
   alias = "secondary"
   kubernetes {
-    load_config_file = false
+    # load_config_file = false
     token = data.google_client_config.current.access_token
     host = local.secondary_host
     cluster_ca_certificate = local.secondary_cert
