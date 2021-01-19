@@ -5,14 +5,8 @@ terraform {
       version = ">=2.0.1"
     }
   }
-  backend "remote" {
-    hostname = "app.terraform.io"
-    organization = "hc-dcanadillas"
-
-    workspaces {
-      name = "consul-federation-qapla"
-    }
-  }
+  # backend "remote" {
+  # }
 }
 
 # Collect client config for GCP
