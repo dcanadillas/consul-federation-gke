@@ -1,13 +1,18 @@
 terraform {
   required_version = ">= 0.13"
-  # backend "remote" {
-  #   hostname = "app.terraform.io"
-  #   organization = "my_org"
+  required_providers {
+    helm = {
+      version = ">=2.0.1"
+    }
+  }
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "hc-dcanadillas"
 
-  #   workspaces {
-  #     name = "my_workspace"
-  #   }
-  # }
+    workspaces {
+      name = "consul-federation-qapla"
+    }
+  }
 }
 
 # Collect client config for GCP
@@ -36,11 +41,17 @@ module "gke" {
 
 module "k8s" {
   source = "./modules/kubernetes"
-  depends_on = [ module.gke ]
+  depends_on = [ 
+    module.gke,
+    data.google_client_config.current
+  ]
   providers = {
     helm = helm.primary
     kubernetes = kubernetes.primary
   }
+  # token = data.google_client_config.current.access_token
+  # k8s_host = local.secondary_host
+  # k8s_cert = local.secondary_cert
   cluster_endpoint = module.gke.0.k8s_endpoint
   cluster_namespace = "consul"
   ca_certificate = module.gke.0.gke_ca_certificate
@@ -66,12 +77,16 @@ module "k8s-sec" {
   source = "./modules/kubernetes"
   depends_on = [ 
     module.gke,
-    module.k8s
+    module.k8s,
+    data.google_client_config.current
   ]
   providers = {
     helm = helm.secondary
     kubernetes = kubernetes.secondary
   }
+  # token = data.google_client_config.current.access_token
+  # k8s_host = local.secondary_host
+  # k8s_cert = local.secondary_cert
   cluster_endpoint = module.gke.1.k8s_endpoint
   cluster_namespace = "consul"
   ca_certificate = module.gke.1.gke_ca_certificate

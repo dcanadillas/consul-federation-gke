@@ -8,6 +8,14 @@
 # variable "token" {
 #   description = "The Kubernetes client token"
 # }
+# variable "k8s_host" {
+#   description = "The Kubernetes host endpoint"
+# }
+# variable "k8s_cert" {
+#   description = "The Kubernetes certificate"
+# }
+
+
 variable "cluster_namespace" {
   description = "Namespace to be created for the cluster"
 }
