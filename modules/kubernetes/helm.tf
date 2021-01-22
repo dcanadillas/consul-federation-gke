@@ -27,3 +27,25 @@ data "kubernetes_secret" "consul-federation" {
   }
 }
 
+
+# # Let's create a sleep to let the Load Balancer IP be assigned. We could enable `wait` in the Helm also, but we want to depend only on LB for Consul-UI
+resource "time_sleep" "wait_60_seconds" {
+  depends_on = [
+    helm_release.consul
+  ]
+
+  create_duration = "1s"
+}
+
+# # Let's enable this if you want to expose in the output the Consul-UI.
+# data "kubernetes_service" "consul-ui" {
+#   depends_on = [ 
+#     helm_release.consul,
+#     time_sleep.wait_60_seconds
+#   ]
+#   metadata {
+#     name = "consul-ui"
+#     namespace = kubernetes_namespace.consul.metadata.0.name
+#   }
+# }
+

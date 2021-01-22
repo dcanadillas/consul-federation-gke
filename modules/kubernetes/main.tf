@@ -6,15 +6,15 @@ resource "kubernetes_namespace" "consul" {
 }
 
 # Creating dynamically a hostname list to use later on template
-data "null_data_source" "hostnames" {
-  count = var.nodes
-  inputs = {
-      hostnames = "consul-server-${count.index}"
-  }
-}
-locals {
-  hostnames = data.null_data_source.hostnames.*.inputs.hostnames
-}
+# data "null_data_source" "hostnames" {
+#   count = var.nodes
+#   inputs = {
+#       hostnames = "consul-server-${count.index}"
+#   }
+# }
+# locals {
+#   hostnames = data.null_data_source.hostnames.*.inputs.hostnames
+# }
 
 # # Let's create a secret with the json credentials
 # resource "google_service_account_key" "gcp_sa_key" {

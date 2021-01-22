@@ -4,3 +4,6 @@ output "consul_yaml" {
 output "federation_secret" {
   value = data.kubernetes_secret.consul-federation.data
 }
+# output "consul_ui" {
+#   value = data.kubernetes_service.consul-ui.status.0.load_balancer.0.ingress.0.ip
+# }

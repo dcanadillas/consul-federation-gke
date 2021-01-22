@@ -4,9 +4,12 @@ terraform {
     helm = {
       version = ">=2.0.1"
     }
+    kubernetes = {
+      version = ">=2.0.1"
+    }
   }
-  # backend "remote" {
-  # }
+  backend "remote" {
+  }
 }
 
 # Collect client config for GCP
@@ -18,6 +21,8 @@ data "google_service_account" "owner_project" {
 module "gke" {
   # source  = "app.terraform.io/hc-dcanadillas/gke/tf"
   source  = "github.com/dcanadillas/dcanadillas-tf-gke"
+  # source  = "./modules/gke"
+
   # version = "0.1.0"
   count = var.create_federation ? 2 : 1
   dns_zone = var.dns_zone
@@ -37,7 +42,7 @@ module "k8s" {
   source = "./modules/kubernetes"
   depends_on = [ 
     module.gke,
-    data.google_client_config.current
+    # data.google_container_cluster.primary_gke
   ]
   providers = {
     helm = helm.primary
@@ -70,9 +75,9 @@ module "k8s-sec" {
   count = var.create_federation ? 1 : 0
   source = "./modules/kubernetes"
   depends_on = [ 
-    module.gke,
+    # module.gke,
     module.k8s,
-    data.google_client_config.current
+    # data.google_container_cluster.secondary_gke
   ]
   providers = {
     helm = helm.secondary
