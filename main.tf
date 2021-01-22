@@ -8,8 +8,8 @@ terraform {
       version = ">=2.0.1"
     }
   }
-  backend "remote" {
-  }
+  # backend "remote" {
+  # }
 }
 
 # Collect client config for GCP
