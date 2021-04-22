@@ -11,7 +11,7 @@ output "gke_hosts" {
   ]
 }
 output "Federation_CA_cert" {
-  value = module.k8s.federation_secret.caCert
+  value = var.create_federation ? nonsensitive(module.k8s.federation_secret.caCert) : "No federation configured"
 }
 output "consul_values_dc1" {
   value = module.k8s.consul_yaml
@@ -27,7 +27,7 @@ output "consul_values_dc2" {
 # }
 output "GKE_CA_certs" {
   value = [
-    module.gke[0].gke_ca_certificate,
-    module.gke[1].gke_ca_certificate
+    module.gke[*].gke_ca_certificate,
+    # module.gke[1].gke_ca_certificate
   ]
 }

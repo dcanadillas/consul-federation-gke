@@ -67,8 +67,12 @@ meshGateway:
 
 connectInject:
   enabled: true
+    transparentProxy:
+    defaultEnabled: true
+%{if enterprise ~}
   consulNamespaces:
     mirroringK8S: true
+%{endif ~}  
 client:
   enabled: true
   grpc: true
