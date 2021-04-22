@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.15" # 0.14 does not refresh data sources on destroy and you need to do a plan before a destroy to auth to K8s and Helm
+  required_version = ">= 0.15" # With 0.14 data sources are not refreshed on destroy and you need to do an apply before a destroy to auth to K8s and Helm
   required_providers {
     google = {
       source = "hashicorp/google"
