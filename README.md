@@ -44,7 +44,7 @@ This Terraform configuration is based on the following actions and parameters
   * `create_federation` : To create a federated cluster. If you just want to deploy one Consul cluster without federation set this to *false* (default is *true*)
   * `consul_enterprise` : Set this to true to deploy Consul Enterprise and enable by default its features (default is *false*)
   * `consul_version` : Specify the version of Consul (1.8.0+)
-  * `chart_version` : Specify version of the Helm Chart according to the [compatibility matrix](https://www.consul.io/docs/k8s/upgrade/compatibility)
+  * `chart_version` : Specify version of the Helm Chart according to [compatibility matrix](https://www.consul.io/docs/k8s/upgrade/compatibility)
 * It uses some `yaml` files values  in the [`templates` directory](./templates) in the root module
 
 ## Deploy Consul

@@ -17,7 +17,7 @@ resource "helm_release" "consul" {
       google_storage_bucket_object.consul-config.content
   ]
 
-  wait = true
+  wait = false
 }
 
 data "kubernetes_secret" "consul-federation" {
