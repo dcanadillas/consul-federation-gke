@@ -45,6 +45,7 @@ This Terraform configuration is based on the following actions and parameters
   * `consul_enterprise` : Set this to true to deploy Consul Enterprise and enable by default its features (default is *false*)
   * `consul_version` : Specify the version of Consul (1.8.0+)
   * `chart_version` : Specify version of the Helm Chart according to [compatibility matrix](https://www.consul.io/docs/k8s/upgrade/compatibility)
+
 * It uses some `yaml` files values  in the [`templates` directory](./templates) in the root module
 
 ## Deploy Consul
